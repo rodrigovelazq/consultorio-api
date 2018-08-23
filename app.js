@@ -64,21 +64,14 @@ var connection = null;
 
 if (config.use_env_variable) {
   connection = new Sequelize(process.env[config.use_env_variable], config);
-  connection.authenticate().then(function(err) {
-    app.listen(nconf.get('server:port'), function () {
-      console.log(`Conectado a la base de datos y escuchando en el puerto: ${nconf.get('server:port')}`);
-    });
-  }).catch(function (err) {
-    console.log('Unable to connect to the database:', err);
-  });
 } else {
   connection = new Sequelize(config.database, config.username, config.password, config);
-
 }
 
 connection.authenticate().then(function(err) {
-  app.listen(nconf.get('server:port'), function () {
-    console.log(`Conectado a la base de datos y escuchando en el puerto: ${nconf.get('server:port')}`);
+  app.listen(process.env.PORT || nconf.get('server:port'), function () {
+    var port = server.address().port;
+    console.log('Conectado a la base de datos y escuchando en el puerto: '+port);
   });
 }).catch(function (err) {
   console.log('Unable to connect to the database:', err);
