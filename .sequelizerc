@@ -1,0 +1,11 @@
+var path = require('path');
+
+// variable global para poder hacer imports relativos
+global.__base = __dirname + '/';
+
+module.exports = {
+  config: path.resolve('config', 'database.json'),
+  'migrations-path': path.resolve('data','migrations'),
+  'models-path': path.resolve('data', 'models'),
+  'seeders-path': path.resolve('data','seeders')
+}
