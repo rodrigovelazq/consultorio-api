@@ -70,7 +70,7 @@ if (config.use_env_variable) {
 
 connection.authenticate().then(function(err) {
   app.listen(process.env.PORT || nconf.get('server:port'), function () {
-    var port = server.address().port;
+    var port = process.env.PORT || nconf.get('server:port');
     console.log('Conectado a la base de datos y escuchando en el puerto: '+port);
   });
 }).catch(function (err) {
