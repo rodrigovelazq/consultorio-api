@@ -9,6 +9,8 @@ const nconf = require('./config');
 //var LocalStrategy = require('passport-local').Strategy;
 var app = express();
 //const controller = require('./controller');
+var env       = process.env.NODE_ENV || 'development';
+var config    = require(__dirname + '/config/database.json')[env];
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -58,14 +60,28 @@ const password = nconf.get('database:password');
 const dbName = nconf.get('database:name');
 const options = nconf.get('database:options');
 
-const connection = new Sequelize(dbName, username, password, options);
+var connection = null;
 
-connection.authenticate().then(function(err) {
+if (config.use_env_variable) {
+  connection = new Sequelize(process.env[config.use_env_variable], config);
+  connection.authenticate().then(function(err) {
     app.listen(nconf.get('server:port'), function () {
       console.log(`Conectado a la base de datos y escuchando en el puerto: ${nconf.get('server:port')}`);
     });
   }).catch(function (err) {
     console.log('Unable to connect to the database:', err);
   });
+} else {
+  connection = new Sequelize(config.database, config.username, config.password, config);
+
+}
+
+connection.authenticate().then(function(err) {
+  app.listen(nconf.get('server:port'), function () {
+    console.log(`Conectado a la base de datos y escuchando en el puerto: ${nconf.get('server:port')}`);
+  });
+}).catch(function (err) {
+  console.log('Unable to connect to the database:', err);
+});
 
 module.exports = app;
