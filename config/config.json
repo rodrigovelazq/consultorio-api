@@ -15,5 +15,6 @@
   "server": {
     "port": 4000
   },
+  "secret" : "sXk35yLhpnn');U}7hT]`axK<R%`9.",
   "sendDir": "/home/rodrigo/consultorio_data/"
 }

@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt');
 const Sequelize = require('sequelize');
 const models = require('../data/models');
 const nconf = require('../config');
+const bcrypt = require('bcryptjs');
 
 exports.getAll = async function() {
       //throw 'Ocurrio un error grave';
