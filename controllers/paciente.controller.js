@@ -56,7 +56,7 @@ exports.create = (req, res) => {
 // Retrieve all Pacientes from the database.
 exports.findAll = (req, res) => {
     const {page, size, filter, order, orderBy} = req.query;
-    var condition = filter ? {[Op.or]: [{nombre: {[Op.like]: `%${filter}%`}}, {apellido: {[Op.like]: `%${filter}%`}}]} : null;
+    var condition = filter ? {[Op.or]: [{nombre: {[Op.iLike]: `%${filter}%`}}, {apellido: {[Op.iLike]: `%${filter}%`}}]} : null;
 
     const {limit, offset} = getPagination(page, size);
     const orderArray = getOrder(order, orderBy);
