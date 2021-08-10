@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     apellido: DataTypes.STRING,
     telefono: DataTypes.STRING,
     cedula: DataTypes.STRING,
-    fecha_nacimiento: DataTypes.DATE
+    fecha_nacimiento: DataTypes.DATEONLY
   }, {
     sequelize,
     modelName: 'paciente',
